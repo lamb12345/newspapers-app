@@ -64,3 +64,24 @@ export const POST = async (req: Request, res: Response) => {
     .status(201)
     .json({ message: "new publisher saved successfully", newPublisher });
 };
+
+export const PUT = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { names, joinedDate }: Publisher = req.body;
+
+  const updatedPublisher = await prisma.publisher.update({
+    where: {
+      id: +id,
+    },
+    data: {
+      names: names,
+      joinedDate: new Date(joinedDate),
+    },
+  });
+
+  return res
+    .status(201)
+    .json({ message: "publisher updated successfully", updatedPublisher });
+};
+
+export const DELETE = async(req: Request, res: Response) => {}
