@@ -29,22 +29,22 @@ const GET = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
             },
         },
     });
-    res.status(200).json({ message: "all news papers", newspapers });
+    return res.status(200).json({ message: "all news papers", newspapers });
 });
 exports.GET = GET;
 const GET_ONE = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({ message: "GET ONE NEWS PAPER" });
+    return res.status(200).json({ message: "GET ONE NEWS PAPER" });
 });
 exports.GET_ONE = GET_ONE;
 const POST = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(201).json({ message: "CREATE A NEWSPAPER" });
+    return res.status(201).json({ message: "CREATE A NEWSPAPER" });
 });
 exports.POST = POST;
 const PUT = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({ message: "UPDATE A NEWSPAPER" });
+    return res.status(200).json({ message: "UPDATE A NEWSPAPER" });
 });
 exports.PUT = PUT;
 const DELETE = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(201).json({ message: "DELETE A NEWSPAPER" });
+    return res.status(201).json({ message: "DELETE A NEWSPAPER" });
 });
 exports.DELETE = DELETE;
