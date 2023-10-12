@@ -102,6 +102,7 @@ export const PUT = async (req: Request, res: Response) => {
   return res.status(200).json({ message: "UPDATE A NEWSPAPER" });
 };
 
+// delete a news paper
 export const DELETE = async (req: Request, res: Response) => {
   const { id } = req.params;
   const newsPaper = await prisma.newsPaper.findUnique({

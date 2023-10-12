@@ -2,6 +2,10 @@ import AWS from "aws-sdk";
 
 import url from "url";
 
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
 const bucketName = "newspapers-images";
 
 AWS.config.update({ region: "us-east-1" });
@@ -14,8 +18,8 @@ interface ImageInterface {
 
 const s3 = new AWS.S3({
   credentials: {
-    accessKeyId: "AKIA4PA6PEZSR2RSEQCN",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   },
 });
 
