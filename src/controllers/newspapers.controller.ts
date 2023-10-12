@@ -4,19 +4,32 @@ import awsHelpers from "../helpers/aws.helpers";
 
 const prisma = new PrismaClient();
 
+enum Language {
+  ENG,
+  ES,
+  FR,
+}
+
+interface NewsPaper {
+  link: string;
+  abstract: string;
+  creationDate: Date;
+  title: string;
+  publisherId: number;
+  languages: Language[];
+}
+
+// get all news papers
 export const GET = async (_: Request, res: Response) => {
   const newspapers = await prisma.newsPaper.findMany({
     select: {
       id: true,
-      link: true,
-      abstract: true,
+      image: true,
       creationDate: true,
       title: true,
       publisher: {
         select: {
-          id: true,
           names: true,
-          joinedDate: true,
         },
       },
     },
@@ -24,12 +37,65 @@ export const GET = async (_: Request, res: Response) => {
   return res.status(200).json({ message: "all news papers", newspapers });
 };
 
-export const GET_ONE = async (_: Request, res: Response) => {
-  return res.status(200).json({ message: "GET ONE NEWS PAPER" });
+// get a newspaper
+export const GET_ONE = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const newsPaper = await prisma.newsPaper.findUnique({
+    where: {
+      id: +id,
+    },
+    select: {
+      id: true,
+      image: true,
+      creationDate: true,
+      title: true,
+      abstract: true,
+      link: true,
+      publisher: {
+        select: {
+          id: true,
+          names: true,
+        },
+      },
+    },
+  });
+
+  return newsPaper
+    ? res.status(200).json({ newsPaper })
+    : res.status(404).json({ message: "news paper not found" });
 };
 
+// create news paper
 export const POST = async (req: Request, res: Response) => {
-  return res.status(201).json({ message: "CREATE A NEWSPAPER" });
+  const {
+    abstract,
+    creationDate,
+    link,
+    languages,
+    publisherId,
+    title,
+  }: NewsPaper = req.body;
+
+  const file = req?.files?.file as {
+    name: string;
+    data: Buffer;
+    mimetype: string;
+  };
+
+  const image = await awsHelpers.uploadFile(file);
+  const newNewsPaper = await prisma.newsPaper.create({
+    data: {
+      abstract,
+      creationDate: new Date(creationDate),
+      image,
+      link,
+      title,
+      publisherId: +publisherId,
+    },
+  });
+  return res
+    .status(201)
+    .json({ message: "newspaper saved successfully", newNewsPaper });
 };
 
 export const PUT = async (req: Request, res: Response) => {

@@ -8,6 +8,7 @@ interface Publisher {
   joinedDate: Date;
 }
 
+//get publishers
 export const GET = async (_: Request, res: Response) => {
   const publishers = await prisma.publisher.findMany({
     select: {
@@ -24,6 +25,33 @@ export const GET = async (_: Request, res: Response) => {
   return res.status(200).json({ message: "all publishers", publishers });
 };
 
+//get publisher
+export const GET_ONE = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const publisher = await prisma.publisher.findUnique({
+    where: {
+      id: +id,
+    },
+    select: {
+      names: true,
+      joinedDate: true,
+      newsPapers: {
+        select: {
+          id: true,
+          link: true,
+          abstract: true,
+          creationDate: true,
+          title: true,
+        },
+      },
+    },
+  });
+  return publisher
+    ? res.status(200).json({ publisher })
+    : res.status(404).json({ message: "publisher not found" });
+};
+
+//create publisher
 export const POST = async (req: Request, res: Response) => {
   const { names, joinedDate }: Publisher = req.body;
   const newPublisher = await prisma.publisher.create({

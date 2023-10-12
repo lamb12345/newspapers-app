@@ -15,22 +15,29 @@ const s3 = new AWS.S3({
   },
 });
 
-const uploadFile = (image: ImageInterface) => {
-  const uploadParams = {
-    Bucket: "newspapers-images",
-    Key: image.name,
-    Body: Buffer.from(image.data),
-    ContentType: image.mimetype,
-    ACL: "public-read",
-  };
+const uploadFile = async (image: ImageInterface) => {
+  const timestamp = new Date().getTime();
+  const key = `${image.name}-${timestamp}`;
 
-  s3.upload(uploadParams, (err: any, data: any) => {
-    if (err) {
-      console.log(err);
-    } else {
-      return data.Location;
+  return new Promise(
+    (resolve: (data: any) => void, reject: (error: any) => void) => {
+      const uploadParams = {
+        Bucket: "newspapers-images",
+        Key: key,
+        Body: Buffer.from(image.data),
+        ContentType: image.mimetype,
+        ACL: "public-read",
+      };
+
+      s3.upload(uploadParams, (err: any, data: any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data.Location);
+        }
+      });
     }
-  });
+  );
 };
 
 export default {
