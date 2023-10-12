@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon dist/app.js"
+    "start": "nodemon dist/app.js",
+    "build": "tsc --build"
   },
   "keywords": [],
   "author": "",

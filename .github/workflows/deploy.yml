@@ -1,0 +1,32 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get the codes
+        uses: actions/checkout@v4
+      - name: install dependencies
+        run: npm install
+      - name: build the project
+        run: tsc --build
+      - name: get the build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: download the artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: view artifacts
+        run: ls
+      - name: deploy
+        run: echo "deploying..."
