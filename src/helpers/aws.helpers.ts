@@ -1,5 +1,9 @@
 import AWS from "aws-sdk";
 
+import url from "url";
+
+const bucketName = "newspapers-images";
+
 AWS.config.update({ region: "us-east-1" });
 
 interface ImageInterface {
@@ -22,7 +26,7 @@ const uploadFile = async (image: ImageInterface) => {
   return new Promise(
     (resolve: (data: any) => void, reject: (error: any) => void) => {
       const uploadParams = {
-        Bucket: "newspapers-images",
+        Bucket: bucketName,
         Key: key,
         Body: Buffer.from(image.data),
         ContentType: image.mimetype,
@@ -40,6 +44,28 @@ const uploadFile = async (image: ImageInterface) => {
   );
 };
 
+const deleteFile = async (imageUrl: string) => {
+  const parsedUrl = url.parse(imageUrl);
+  const imageName = parsedUrl.pathname?.slice(1);
+
+  return new Promise(
+    (resolve: (data: any) => void, reject: (error: any) => void) => {
+      const params = {
+        Bucket: bucketName,
+        Key: imageName as string,
+      };
+      s3.deleteObject(params, (err: any, data: any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data.Location);
+        }
+      });
+    }
+  );
+};
+
 export default {
   uploadFile,
+  deleteFile,
 };

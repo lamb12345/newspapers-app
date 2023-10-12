@@ -103,5 +103,33 @@ export const PUT = async (req: Request, res: Response) => {
 };
 
 export const DELETE = async (req: Request, res: Response) => {
-  return res.status(201).json({ message: "DELETE A NEWSPAPER" });
+  const { id } = req.params;
+  const newsPaper = await prisma.newsPaper.findUnique({
+    where: {
+      id: +id,
+    },
+    select: {
+      image: true,
+    },
+  });
+
+  const image = newsPaper?.image;
+  try {
+    await prisma.$transaction(async (prismaClient) => {
+      await awsHelpers.deleteFile(image as string);
+      await prismaClient.newsPaper.delete({
+        where: {
+          id: +id,
+        },
+      });
+    });
+
+    return res.status(200).json({ message: "News paper deleted successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Please try again... an error occurred" });
+  } finally {
+    await prisma.$disconnect();
+  }
 };
