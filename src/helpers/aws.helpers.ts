@@ -6,8 +6,6 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const bucketName = "newspapers-images";
-
 AWS.config.update({ region: "us-east-1" });
 
 interface ImageInterface {
@@ -30,7 +28,7 @@ const uploadFile = async (image: ImageInterface) => {
   return new Promise(
     (resolve: (data: any) => void, reject: (error: any) => void) => {
       const uploadParams = {
-        Bucket: bucketName,
+        Bucket: process.env.AWS_BUCKET_NAME as string,
         Key: key,
         Body: Buffer.from(image.data),
         ContentType: image.mimetype,
@@ -55,7 +53,7 @@ const deleteFile = async (imageUrl: string) => {
   return new Promise(
     (resolve: (data: any) => void, reject: (error: any) => void) => {
       const params = {
-        Bucket: bucketName,
+        Bucket: process.env.AWS_BUCKET_NAME as string,
         Key: imageName as string,
       };
       s3.deleteObject(params, (err: any, data: any) => {
