@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Publisher {
+  id         Int      @id @default(autoincrement())
+  names      String
+  joinedDate DateTime @map("joined_date")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt
+
+  newsPapers NewsPaper[]
+
+  @@map("publishers")
+}
+
+model NewsPaper {
+  id           Int      @id @default(autoincrement())
+  publisherId  Int
+  title        String
+  image        String
+  link         String
+  abstract     String
+  creationDate DateTime @map("creation_date")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt
+
+  publisher Publisher @relation(fields: [publisherId], references: [id])
+
+  @@map("newspapers")
+}
+
+model NewsPaperLanguage {
+  id       Int      @id @default(autoincrement())
+  language Language
+
+  @@map("newspaper_languages")
+}
+
+enum Language {
+  ENG
+  ES
+  FR
+}
