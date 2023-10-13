@@ -20,8 +20,8 @@ app.use(
   })
 );
 
-app.use("/newspapers", newsPapersRoutes);
+app.use("/api/newspapers", newsPapersRoutes);
 
-app.use("/publishers", publishersRoutes);
+app.use("/api/publishers", publishersRoutes);
 
 app.listen(4000);
