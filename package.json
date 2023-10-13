@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon dist/app.js",
+    "start-dev": "nodemon dist/app.js",
+    "start": "node server.js",
     "build": "tsc --build"
   },
   "keywords": [],
