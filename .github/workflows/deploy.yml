@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: get the codes
         uses: actions/checkout@v4
+      - name: install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: install dependencies
         run: npm install
       - name: build the project
@@ -19,4 +23,4 @@ jobs:
       - name: create .env
         run: |
           touch .env
-          echo "${{secrets.PROD_ENV_FILE}}" > .env          
+          echo "${{secrets.PROD_ENV_FILE}}" > .env
