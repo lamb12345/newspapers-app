@@ -4,8 +4,8 @@ interface DataInterface {
   endpoint: string;
   parameter: string;
   body: Object;
-  description: string;
   method: string;
+  description: string;
 }
 
 export const GET = (_: Request, res: Response) => {
