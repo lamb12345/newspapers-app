@@ -73,7 +73,7 @@ export const GET = (_: Request, res: Response) => {
       parameter: "",
       body: {
         title: "Michigan City dispatch.",
-        file: "upload png/jpeg file",
+        file: "upload any file",
         link: "https://www.britannica.com/place/Michigan",
         abstract:
           "Michigan, constituent state of the United States of America. Although by the size of its land Michigan ranks only 22nd of the 50 states, the inclusion of the Great Lakes waters over which it has jurisdiction increases its area considerably, placing it 11th in terms of total area. The capital is Lansing, in south-central Michigan. The state's name is derived from michi-gama, an Ojibwa (Chippewa) word meaning 'large lake.'",
