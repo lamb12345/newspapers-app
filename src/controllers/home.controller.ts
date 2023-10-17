@@ -15,14 +15,14 @@ export const GET = (_: Request, res: Response) => {
       description: "Get all publishers",
       parameter: "",
       body: {},
-      endpoint: "/publishers",
+      endpoint: "/api/publishers",
       method: "GET",
     },
     {
       description: "Get one publisher with total number of newspaperd",
       parameter: "id",
       body: {},
-      endpoint: "/publishers/:id",
+      endpoint: "/api/publishers/:id",
       method: "GET",
     },
     {
@@ -32,7 +32,7 @@ export const GET = (_: Request, res: Response) => {
         names: "eric",
         joinedDate: "2022-10-31",
       },
-      endpoint: "/publishers",
+      endpoint: "/api/publishers",
       method: "POST",
     },
     {
@@ -42,14 +42,14 @@ export const GET = (_: Request, res: Response) => {
         names: "eric",
         joinedDate: "2022-10-31",
       },
-      endpoint: "/publishers/:id",
+      endpoint: "/api/publishers/:id",
       method: "PUT",
     },
     {
       description: "delete a publisher and related newspapers",
       parameter: "id",
       body: {},
-      endpoint: "/publishers/:id",
+      endpoint: "/api/publishers/:id",
       method: "DELETE",
     },
 
@@ -58,14 +58,14 @@ export const GET = (_: Request, res: Response) => {
       description: "Get all newspapers",
       parameter: "",
       body: {},
-      endpoint: "/newspapers",
+      endpoint: "/api/newspapers",
       method: "GET",
     },
     {
       description: "Get one newspaper with its publisher",
       parameter: "id",
       body: {},
-      endpoint: "/newspapers/:id",
+      endpoint: "/api/newspapers/:id",
       method: "GET",
     },
     {
@@ -80,7 +80,7 @@ export const GET = (_: Request, res: Response) => {
         publisherId: 1,
         creationDate: "2022-10-21",
       },
-      endpoint: "/newspapers",
+      endpoint: "/api/newspapers",
       method: "POST",
     },
 
@@ -88,10 +88,10 @@ export const GET = (_: Request, res: Response) => {
       description: "delete a newspaper",
       parameter: "id",
       body: {},
-      endpoint: "/newspapers/:id",
+      endpoint: "/api/newspapers/:id",
       method: "DELETE",
     },
   ];
 
-  return res.status(200).json({ data });
+  return res.status(200).json({description: 'endpoints description',  data });
 };
