@@ -98,6 +98,7 @@ export const POST = async (req: Request, res: Response) => {
     .json({ message: "newspaper saved successfully", newNewsPaper });
 };
 
+//update a newspaper
 export const PUT = async (req: Request, res: Response) => {
   return res.status(200).json({ message: "UPDATE A NEWSPAPER" });
 };

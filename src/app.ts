@@ -4,7 +4,9 @@ import bodyParser from "body-parser";
 
 import newsPapersRoutes from "./routes/newspapers.route";
 
-import publishersRoutes from './routes/publishers.route'
+import publishersRoutes from './routes/publishers.route';
+
+import homeRoutes from "./routes/home.route";
 
 import fileUpload from "express-fileupload";
 
@@ -19,6 +21,8 @@ app.use(
     },
   })
 );
+
+app.use("/api", homeRoutes);
 
 app.use("/api/newspapers", newsPapersRoutes);
 
