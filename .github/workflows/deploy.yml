@@ -35,6 +35,6 @@ jobs:
           touch .env
           echo "${{secrets.PROD_ENV_FILE}}" > .env
       - name: restart pm2
-        run: pm2 restart app
+        run: ls
       
 
